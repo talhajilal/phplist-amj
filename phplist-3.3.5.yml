@@ -12,19 +12,19 @@ services:
        MYSQL_USER: ${MYSQL_USER}
        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
-   mailhost:
-     image: phplist/postfix:latest
-     volumes:
-       - /opt/phplist/mailhost:/var/spool/postfix
+#   mailhost:
+#     image: phplist/postfix:latest
+#     volumes:
+#       - /opt/phplist/mailhost:/var/spool/postfix
 
    phplist:
      depends_on:
        - dbhost
-       - mailhost
      image: phplist/phplist:3.3.5
      volumes:
        - /opt/phplist/images:/var/www/phpList3/public_html/images
        - ./phplist/docker-apache-phplist.conf:/etc/apache2/sites-enabled/docker-apache-phplist.conf:ro
+       - /opt/phplist/web:/var/www/
      ports:
        - "${PORT}:80"
      restart: always
